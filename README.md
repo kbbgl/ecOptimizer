@@ -193,3 +193,4 @@ MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplat
 [david_site]: https://david-dm.org/electron-react-boilerplate/electron-react-boilerplate
 [david_img_dev]: https://david-dm.org/electron-react-boilerplate/electron-react-boilerplate/dev-status.svg
 [david_site_dev]: https://david-dm.org/electron-react-boilerplate/electron-react-boilerplate?type=dev
+# ecOptimizer
