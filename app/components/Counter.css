@@ -35,3 +35,16 @@
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.ReactModal__Content--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content {
+  opacity: 0;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transition: opacity 150ms;
+}
