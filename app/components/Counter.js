@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import styles from './Counter.css';
 import routes from '../constants/routes';
 import Modal from "react-modal";
-import SearchBox from 'react-search-box'
 
 const modalStyle = {
   content : {
@@ -26,7 +25,6 @@ export default class Counter extends Component<Props> {
   constructor(props){
     super(props);
     this.state = {
-      loading: false,
       elasticubes: [],
       chosenElastiCube: undefined,
       isModalOpen: false,
@@ -39,7 +37,6 @@ export default class Counter extends Component<Props> {
     this.closeModal = this.closeModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
   
   openModal = (event) => {
@@ -65,13 +62,11 @@ export default class Counter extends Component<Props> {
   componentDidMount(){
 
     this.setState({
-      loading: true
     })
 
     fetch('http://localhost:3001/elasticubes')
     .then(res => res.json())
     .then(elasticubes => this.setState({
-      loading: false,
       elasticubes
     }));
   }
@@ -85,6 +80,23 @@ export default class Counter extends Component<Props> {
     console.log('Form submitted:');
     console.log('duplicateDashboards: ' + this.state.duplicateDashboards);
     console.log('buildAfterOptimization: ' + this.state.buildAfterOptimization);
+
+    var submittedOptions = {
+      elasticube: this.state.chosenElastiCube,
+      duplicateDashboards: this.state.duplicateDashboards,
+      buildAfterOptimization: this.state.buildAfterOptimization
+    }
+
+    fetch('http://localhost:3001/optimize', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submittedOptions)
+      }
+      )
+
 
     this.closeModal();
   }
@@ -106,20 +118,6 @@ export default class Counter extends Component<Props> {
     }
   }
 
-  // handleChange = (chosenElastiCube) => {
-  //   this.setState({
-  //     chosenElastiCube
-  //   })
-  // }
-
-  // <SearchBox 
-  //         data={this.state.elasticubes} 
-  //         onChange={this.handleChange} 
-  //         placeholder='Search for an ElastiCube...' 
-  //         searchKey={this.state.elasticubes.oid} 
-  //         loading={this.state.loading} 
-  //         width={300} 
-  //         height={40} />
 
   render() {
     return (
@@ -129,7 +127,6 @@ export default class Counter extends Component<Props> {
             <i className="fa fa-arrow-left fa-3x" />
           </Link>
         </div>
-        
         <h1>ElastiCubes:</h1>
         <ul>
           {this.state.elasticubes.map((elasticube, index) =>

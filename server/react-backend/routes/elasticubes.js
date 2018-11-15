@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 
-
-
 router.get('/', function(req, res, next) {
   console.log('get received');
   
@@ -20,7 +18,6 @@ router.get('/', function(req, res, next) {
 
     db.collection('elasticubes').find({oid: {$exists: true}}).toArray().then((elasticubes) => {
 
-      console.log(elasticubes)
       res.send(elasticubes);
     })
 
